@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-PATTERN = "https:\/\/www\.wg\-gesucht\.de\/[\d]+\.html"
+LINKPATTERN = "https:\/\/www\.wg\-gesucht\.de\/[\d]+\.html"
 
 def scrapeWGsite(path : str):
     response = requests.get(path)
@@ -24,7 +24,7 @@ def extractLinks(path : str):
         soup = BeautifulSoup(fp, 'html.parser')
     linkData = soup.findAll('div', {"style" : "margin-bottom:10px;"})[1::2]
     for i in range(len(linkData)):
-        link : str = re.search(PATTERN, linkData[i].text)[i]
+        link : str = re.search(LINKPATTERN, linkData[i].text)[i]
         linkList.append(link)
     return linkList
 
